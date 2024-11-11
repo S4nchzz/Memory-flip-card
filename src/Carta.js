@@ -1,23 +1,23 @@
 import React, {useState} from "react";
 
-function Carta (tipo){
-    let flipada = false;
-
-    const [flipped, setFlipped] = useState("flipped.png");
+function Carta ({tipo}){
+    const [isFlip, setFlip] = useState(false)
+    const [cardImage, setCardImage] = useState("flipped.png");
 
     function flipaduqui(){
-        if (flipada === false){
-            setFlipped("flipped.png");
-            flipada = !flipada;
+        if (isFlip === false){
+            setCardImage(tipo);
+            setFlip(!isFlip);
         } else {
-            setFlipped(tipo);        
+            setCardImage("flipped.png");
+            setFlip(!isFlip);
         }
     }
+
     return (
-        <div>
-            <img src={flipped} onClick={flipaduqui()}></img>
+        <div className="carta">
+            <img src={cardImage} onClick={flipaduqui} alt="imagen_carta"></img>
         </div>
     )
-
 }
 export default Carta; 

@@ -1,14 +1,13 @@
 import './App.css';
-import Carta from './Carta';
+import Tablero from './Tablero';
 
 function App() {
   return (
-    <>
-    <div className="App"></div>
-    <div>
-      <Carta></Carta>
+    <div className="App">
+      <div>
+        <Tablero tamano = "8"/>
+      </div>
     </div>
-    </>
   );
 }
 
