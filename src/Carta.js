@@ -1,16 +1,16 @@
 import React, {useState} from "react";
 
 function Carta ({tipo}){
-    const [isFlip, setFlip] = useState(false)
-    const [cardImage, setCardImage] = useState("flipped.png");
+    const [isFliped, setFlip] = useState(false)
+    const [cardImage, setCardImage] = useState("card-back.png");
 
     function flipaduqui(){
-        if (isFlip === false){
+        if (isFliped === false){
             setCardImage(tipo);
-            setFlip(!isFlip);
+            setFlip(!isFliped);
         } else {
-            setCardImage("flipped.png");
-            setFlip(!isFlip);
+            setCardImage("card-back.png");
+            setFlip(!isFliped);
         }
     }
 
@@ -20,4 +20,4 @@ function Carta ({tipo}){
         </div>
     )
 }
-export default Carta; 
+export default Carta;

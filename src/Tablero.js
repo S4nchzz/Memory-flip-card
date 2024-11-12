@@ -15,15 +15,21 @@ function Tablero({tamano}) {
     }
     
     return (
-        <div className="tablero">
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
-            <Carta tipo={tipoCartaAleatorio()}/>
+        <div className="App">
+            <div className="tablero">
+                <div className="row">
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                </div>
+                <div className="row">
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                    <Carta tipo={tipoCartaAleatorio()}/>
+                </div>
+            </div>
         </div>
     )
 }
