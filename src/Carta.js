@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 
-function Carta ({tipo}){
+function Carta ({tipo, comprobarElemento}){
     const [isFliped, setFlip] = useState(false)
     const [cardImage, setCardImage] = useState("card-back.png");
 
-    function flipaduqui(){
+    function flipaduqui(e){
         if (isFliped === false){
             setCardImage(tipo);
             setFlip(!isFliped);
@@ -12,11 +12,14 @@ function Carta ({tipo}){
             setCardImage("card-back.png");
             setFlip(!isFliped);
         }
+
+        comprobarElemento({ ...e, cardImage: tipo });
     }
 
     return (
         <div className="carta">
-            <img src={cardImage} onClick={flipaduqui} alt="imagen_carta"></img>
+            <img src={cardImage} onClick={(e) => flipaduqui(e)} alt="imagen_carta"></img>
+            <h4>{tipo}</h4>
         </div>
     )
 }
