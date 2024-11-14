@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Carta from "./Carta"
 
-function Tablero({tamano}) {
+function Tablero({tamano, score, setScore}) {
     const tipos = ["asDeCorazones.png", "asDeDiamantes.png", "asDePicas.png", "asDeTreboles.png"]
     const tiposCartas = [0, 0, 0, 0]
 
@@ -12,15 +12,9 @@ function Tablero({tamano}) {
 
             for (let i = 0; i < 8; i++) {
                 aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
-                aleatorios_aux = generateAleatorizedValues(aleatorios_aux);
 
             }
+            
             if (aleatorios_aux.length >= 8) {
                 setAleatorizedTypes(aleatorios_aux);
             }
@@ -59,45 +53,57 @@ function Tablero({tamano}) {
 
 
     const comprobarElementos = (e) => {
-        setNCartasGiradas(nCartasGiradas + 1);
-        setCartas([...cartas, e]);
-        const visibilidades_aux = []
-
-        if (nCartasGiradas === 2) {
-            if ((tipoIntCartasPresionadas.length === 2 && tipoIntCartasPresionadas[0] === tipoIntCartasPresionadas[1]) && (tipoIntCartasPresionadas[0] !== -1 && tipoIntCartasPresionadas[1] !== -1)) {
-                // Mismas cartas
-                
-                cartas.forEach(c => {
-                    visibilidades_aux[c.id] = true;
-                })
-
-            }
-            setTipoIntCartasPresionadas([])
-            setVisibilidades(visibilidades_aux)
-            setCartas([])
-            return;
-        }
+        let nCardsFliped_aux = nCartasGiradas + 1;
+        const currentCartasPressed_aux = [...cartas, e];
+        const tipoCartasIntPresionadas_aux = []
+        const visibilidades_aux = visibilidades
 
         switch(e.cardImage) {
             case "asDeCorazones.png":
-                setTipoIntCartasPresionadas([...tipoIntCartasPresionadas, 1])                
+                tipoCartasIntPresionadas_aux.push(...tipoIntCartasPresionadas, 1)                
                 break;
             case "asDeDiamantes.png":
-                setTipoIntCartasPresionadas([...tipoIntCartasPresionadas, 2])                
+                tipoCartasIntPresionadas_aux.push(...tipoIntCartasPresionadas, 2)                
                 break;
             case "asDePicas.png":
-                setTipoIntCartasPresionadas([...tipoIntCartasPresionadas, 3])                
+                tipoCartasIntPresionadas_aux.push(...tipoIntCartasPresionadas, 3)                
                 break;
             case "asDeTreboles.png":
-                setTipoIntCartasPresionadas([...tipoIntCartasPresionadas, 4])                
+                tipoCartasIntPresionadas_aux.push(...tipoIntCartasPresionadas, 4)                
                 break;
             default:
-                setTipoIntCartasPresionadas([...tipoIntCartasPresionadas, -1])                
+                tipoCartasIntPresionadas_aux.push(...tipoIntCartasPresionadas, 5)                
                 break;
         }
 
-        
-        
+
+        if (nCardsFliped_aux === 2) {
+            if ((tipoCartasIntPresionadas_aux.length === 2 && tipoCartasIntPresionadas_aux[0] === tipoCartasIntPresionadas_aux[1]) && (tipoCartasIntPresionadas_aux[0] !== -1 && tipoCartasIntPresionadas_aux[1] !== -1)) {
+                // Mismas cartas
+                
+                currentCartasPressed_aux.forEach(c => {
+                    visibilidades_aux[c.id] = true;
+                })
+                
+                setScore(score + 1)
+            }
+
+            setTipoIntCartasPresionadas([])
+            setVisibilidades(visibilidades_aux)
+            setCartas([])
+            setNCartasGiradas(0)
+            return;
+        }
+    
+        // Se confirma la actualizacion de las variables con los valores que les corresponden usando las auxiliares
+        // Estoy se hace debido a que aunque se haga una llamada al setter de una variable de useState esta no adquira
+        // el valor que le corresponde en ese tiempo de ejecucion al instante, si no que esperara a que se renderize todo
+        // el componente para actualizarla, al usar variables auxiliares las podemos programar para que tengan los valores
+        // necesarios en ese punto de ejecucion y asi poder usar este mismo valor para pasarselo al setter y asi poder
+        // actualizar las variables correspondientes con los valores adecuados usando estos mismos valores en el programa
+        setNCartasGiradas(nCardsFliped_aux);
+        setCartas(currentCartasPressed_aux);
+        setTipoIntCartasPresionadas(tipoCartasIntPresionadas_aux)
     }
 
     

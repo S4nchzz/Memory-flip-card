@@ -40,6 +40,7 @@ body {
 /* Border to ALL images (pokemon card & poker cards)*/
 img {
   border-radius: 2%;
+  animation: Card-flip 1s;
 }
 
 @keyframes Card-flip {
@@ -52,5 +53,16 @@ img {
 }
 
 .hidden {
-  visibility: hidden;
+  animation: hideCards linear 0.5s;
+  opacity: 10%;
+}
+
+@keyframes hideCards {
+  from {
+    opacity: 100%;
+  }
+
+  to {
+    opacity: 10%;
+  }
 }
