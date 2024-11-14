@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-function Carta ({tipo, comprobarElemento}){
+function Carta ({id, tipo, comprobarElemento, hidden}){
     const [isFliped, setFlip] = useState(false)
     const [cardImage, setCardImage] = useState("card-back.png");
 
@@ -13,12 +13,12 @@ function Carta ({tipo, comprobarElemento}){
             setFlip(!isFliped);
         }
 
-        comprobarElemento({ ...e, cardImage: tipo });
+        comprobarElemento({ ...e, cardImage: tipo, id: id });
     }
 
     return (
-        <div className="carta">
-            <img src={cardImage} onClick={(e) => flipaduqui(e)} alt="imagen_carta"></img>
+        <div className={`Carta ${hidden ? 'hidden' : ''}`}>
+            <img src={cardImage}  onClick={(e) => flipaduqui(e)} ckass alt="imagen_carta"></img>
             <h4>{tipo}</h4>
         </div>
     )

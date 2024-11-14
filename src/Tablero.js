@@ -54,16 +54,27 @@ function Tablero({tamano}) {
 
     const [nCartasGiradas, setNCartasGiradas] = useState(0);
     const [tipoIntCartasPresionadas, setTipoIntCartasPresionadas] = useState([]);
+    const [cartas, setCartas] = useState([])
+    const [visibilidades, setVisibilidades] = useState(Array(8).fill(false));
+
 
     const comprobarElementos = (e) => {
         setNCartasGiradas(nCartasGiradas + 1);
+        setCartas([...cartas, e]);
+        const visibilidades_aux = []
 
         if (nCartasGiradas === 2) {
             if ((tipoIntCartasPresionadas.length === 2 && tipoIntCartasPresionadas[0] === tipoIntCartasPresionadas[1]) && (tipoIntCartasPresionadas[0] !== -1 && tipoIntCartasPresionadas[1] !== -1)) {
                 // Mismas cartas
-                console.log("acertaste!")
+                
+                cartas.forEach(c => {
+                    visibilidades_aux[c.id] = true;
+                })
+
             }
             setTipoIntCartasPresionadas([])
+            setVisibilidades(visibilidades_aux)
+            setCartas([])
             return;
         }
 
@@ -85,22 +96,25 @@ function Tablero({tamano}) {
                 break;
         }
 
+        
+        
     }
+
     
     return (
         <div className="App">
             <div className="tablero">
                 <div className="row">
-                    <Carta tipo={aleatorizedTypes[0]} comprobarElemento={comprobarElementos}/>
-                    <Carta tipo={aleatorizedTypes[1]} comprobarElemento={comprobarElementos}/>
-                    <Carta tipo={aleatorizedTypes[2]} comprobarElemento={comprobarElementos}/>
-                    <Carta tipo={aleatorizedTypes[3]} comprobarElemento={comprobarElementos}/>
+                    <Carta id="0" tipo={aleatorizedTypes[0]} hidden={visibilidades[0]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="1" tipo={aleatorizedTypes[1]} hidden={visibilidades[1]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="2" tipo={aleatorizedTypes[2]} hidden={visibilidades[2]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="3" tipo={aleatorizedTypes[3]} hidden={visibilidades[3]}comprobarElemento={comprobarElementos}/>
                 </div>
                 <div className="row">
-                    <Carta tipo={aleatorizedTypes[4]} comprobarElemento={comprobarElementos}/>
-                    <Carta tipo={aleatorizedTypes[5]} comprobarElemento={comprobarElementos}/>
-                    <Carta tipo={aleatorizedTypes[6]} comprobarElemento={comprobarElementos}/>
-                    <Carta tipo={aleatorizedTypes[7]} comprobarElemento={comprobarElementos}/>
+                    <Carta id="4" tipo={aleatorizedTypes[4]} hidden={visibilidades[4]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="5" tipo={aleatorizedTypes[5]} hidden={visibilidades[5]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="6" tipo={aleatorizedTypes[6]} hidden={visibilidades[6]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="7" tipo={aleatorizedTypes[7]} hidden={visibilidades[7]}comprobarElemento={comprobarElementos}/>
                 </div>
             </div>
         </div>

@@ -40,7 +40,6 @@ body {
 /* Border to ALL images (pokemon card & poker cards)*/
 img {
   border-radius: 2%;
-  transform: rotatey(180deg);
 }
 
 @keyframes Card-flip {
@@ -52,7 +51,6 @@ img {
   }
 }
 
-.xx {
-  position: absolute;
-  width: 30%;
+.hidden {
+  visibility: hidden;
 }
