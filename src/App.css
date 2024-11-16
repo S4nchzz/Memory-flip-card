@@ -74,3 +74,15 @@ img {
   font-size: 2em;
   margin-bottom: -8.5%;
 }
+
+/*Restart button*/
+
+.restartDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: -10%;
+  margin-bottom: -8%;
+  cursor: pointer;
+}

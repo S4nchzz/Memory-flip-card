@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Carta from "./Carta"
 
-function Tablero({tamano, score, setScore, movements, setMovements}) {
+function Tablero({score, setScore, movements, setMovements}) {
     const tipos = ["asDeCorazones.png", "asDeDiamantes.png", "asDePicas.png", "asDeTreboles.png"]
     const tiposCartas = [0, 0, 0, 0]
 
