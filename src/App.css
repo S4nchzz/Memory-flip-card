@@ -53,8 +53,8 @@ img {
 }
 
 .hidden {
-  animation: hideCards linear 1s;
-  opacity: 10%;
+  animation: hideCards linear 0.3s;
+  opacity: 0%;
 }
 
 @keyframes hideCards {
@@ -65,4 +65,12 @@ img {
   to {
     opacity: 10%;
   }
+}
+
+.movimientos {
+  color: rgb(148, 148, 148);
+  text-align: center;
+  margin-top: 10%;
+  font-size: 2em;
+  margin-bottom: -8.5%;
 }

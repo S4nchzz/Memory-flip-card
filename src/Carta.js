@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
-function Carta ({id, tipo, comprobarElemento, hidden}){
+function Carta ({id, tipo, comprobarElemento, hidden, flipOnFail}){
     const [isFliped, setFlip] = useState(false)
     const [cardImage, setCardImage] = useState("card-back.png");
 
@@ -16,10 +16,18 @@ function Carta ({id, tipo, comprobarElemento, hidden}){
         comprobarElemento({ ...e, cardImage: tipo, id: id });
     }
 
+
+    useEffect(() => {
+        if (flipOnFail) {
+            setCardImage("card-back.png")
+            setFlip(false);
+        }
+
+    }, [flipOnFail])
+
     return (
         <div className={`Carta ${hidden ? 'hidden' : ''}`}>
             <img src={cardImage}  onClick={(e) => flipaduqui(e)} ckass alt="imagen_carta"></img>
-            <h4>{tipo}</h4>
         </div>
     )
 }

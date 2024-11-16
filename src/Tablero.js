@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Carta from "./Carta"
 
-function Tablero({tamano, score, setScore}) {
+function Tablero({tamano, score, setScore, movements, setMovements}) {
     const tipos = ["asDeCorazones.png", "asDeDiamantes.png", "asDePicas.png", "asDeTreboles.png"]
     const tiposCartas = [0, 0, 0, 0]
 
@@ -44,20 +44,21 @@ function Tablero({tamano, score, setScore}) {
 
         return aleatorios_aux;
     }
-    
 
     const [nCartasGiradas, setNCartasGiradas] = useState(0);
     const [tipoIntCartasPresionadas, setTipoIntCartasPresionadas] = useState([]);
     const [cartas, setCartas] = useState([])
     const [visibilidades, setVisibilidades] = useState(Array(8).fill(false));
-    const [cartasIndexArr, setCartasIndexArr] = useState(0);
 
-    
+    const [flipOnFail, setFlipOnFail] = useState(false);
 
     const comprobarElementos = (e) => {
         if (cartas.some(c => c.id === e.id)) {
             return;
         }
+        
+        const movements_aux = movements + 1;
+
         const currentCartasPressed_aux = [...cartas, e];
         let nCardsFliped_aux = nCartasGiradas + 1;
         const tipoCartasIntPresionadas_aux = []
@@ -81,27 +82,34 @@ function Tablero({tamano, score, setScore}) {
                 break;
         }
 
-
-
         if (nCardsFliped_aux === 2) {
             if ((tipoCartasIntPresionadas_aux.length === 2 && tipoCartasIntPresionadas_aux[0] === tipoCartasIntPresionadas_aux[1]) && (tipoCartasIntPresionadas_aux[0] !== -1 && tipoCartasIntPresionadas_aux[1] !== -1)) {
                 // Mismas cartas
                 currentCartasPressed_aux.forEach(c => {
-                    if(cartasIndexArr % 2 === 0) {
-                        visibilidades_aux[c.id] = true
-                        
-                    }
+                    visibilidades_aux[c.id] = true
                 })
                 
                 setScore(score + 1)
+            } else {
+                setTimeout(() => {
+                    // Diferentes cartas, activar flipOnFail
+                    setFlipOnFail(true);
+    
+                    setTimeout(() => {
+                        setFlipOnFail(false);
+                    }, 20); // Tiempo en ejecucion para que vuelva a cambiar el valor de true a false para evitar errores
+                }, 300) // Tiempo que se mantendran las cartas visibles
+
+                setCartas([]);
             }
 
             setTipoIntCartasPresionadas([])
             setVisibilidades(visibilidades_aux)
             setNCartasGiradas(0)
+            setMovements(movements_aux)
             return;
         }
-    
+        
         // Se confirma la actualizacion de las variables con los valores que les corresponden usando las auxiliares
         // Estoy se hace debido a que aunque se haga una llamada al setter de una variable de useState esta no adquira
         // el valor que le corresponde en ese tiempo de ejecucion al instante, si no que esperara a que se renderize todo
@@ -112,22 +120,21 @@ function Tablero({tamano, score, setScore}) {
         setCartas(currentCartasPressed_aux);
         setTipoIntCartasPresionadas(tipoCartasIntPresionadas_aux)
     }
-
     
     return (
         <div className="App">
             <div className="tablero">
                 <div className="row">
-                    <Carta id="0" tipo={aleatorizedTypes[0]} hidden={visibilidades[0]}comprobarElemento={comprobarElementos}/>
-                    <Carta id="1" tipo={aleatorizedTypes[1]} hidden={visibilidades[1]}comprobarElemento={comprobarElementos}/>
-                    <Carta id="2" tipo={aleatorizedTypes[2]} hidden={visibilidades[2]}comprobarElemento={comprobarElementos}/>
-                    <Carta id="3" tipo={aleatorizedTypes[3]} hidden={visibilidades[3]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="0" tipo={aleatorizedTypes[0]} hidden={visibilidades[0]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
+                    <Carta id="1" tipo={aleatorizedTypes[1]} hidden={visibilidades[1]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
+                    <Carta id="2" tipo={aleatorizedTypes[2]} hidden={visibilidades[2]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
+                    <Carta id="3" tipo={aleatorizedTypes[3]} hidden={visibilidades[3]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
                 </div>
                 <div className="row">
-                    <Carta id="4" tipo={aleatorizedTypes[4]} hidden={visibilidades[4]}comprobarElemento={comprobarElementos}/>
-                    <Carta id="5" tipo={aleatorizedTypes[5]} hidden={visibilidades[5]}comprobarElemento={comprobarElementos}/>
-                    <Carta id="6" tipo={aleatorizedTypes[6]} hidden={visibilidades[6]}comprobarElemento={comprobarElementos}/>
-                    <Carta id="7" tipo={aleatorizedTypes[7]} hidden={visibilidades[7]}comprobarElemento={comprobarElementos}/>
+                    <Carta id="4" tipo={aleatorizedTypes[4]} hidden={visibilidades[4]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
+                    <Carta id="5" tipo={aleatorizedTypes[5]} hidden={visibilidades[5]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
+                    <Carta id="6" tipo={aleatorizedTypes[6]} hidden={visibilidades[6]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
+                    <Carta id="7" tipo={aleatorizedTypes[7]} hidden={visibilidades[7]} comprobarElemento={comprobarElementos} flipOnFail={flipOnFail}/>
                 </div>
             </div>
         </div>
