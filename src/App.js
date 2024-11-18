@@ -32,9 +32,6 @@ function App() {
       {
         !reset ? <Tablero score={score} setScore={setScore} movements={movements} setMovements={setMovements}/> : null
       }
-      <div>
-        <Tablero score={score} setScore={setScore} movements={movements} setMovements={setMovements}/>
-      </div>
     </div>
  
   );
